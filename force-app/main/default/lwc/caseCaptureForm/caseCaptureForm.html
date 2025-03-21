@@ -1,0 +1,86 @@
+<template>
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <h2 class="slds-text-heading_medium slds-card__header-title">Submit a Support Case</h2>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-form slds-form_stacked">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="subject">Subject</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="subject" name="Subject" class="slds-input" 
+                               value={caseRecord.Subject} onchange={handleInputChange} required />
+                    </div>
+                </div>
+                
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="product">Product</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="product" name="Product__c" class="slds-select" 
+                                    value={caseRecord.Product__c} onchange={handleInputChange} required>
+                                <option value="">-- Select --</option>
+                                <template for:each={productOptions} for:item="option">
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="type">Issue Type</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="type" name="Type" class="slds-select" 
+                                    value={caseRecord.Type} onchange={handleInputChange} required>
+                                <option value="">-- Select --</option>
+                                <template for:each={typeOptions} for:item="option">
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="priority">Priority</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="priority" name="Priority" class="slds-select" 
+                                    value={caseRecord.Priority} onchange={handleInputChange}>
+                                <template for:each={priorityOptions} for:item="option">
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="description">Description</label>
+                    <div class="slds-form-element__control">
+                        <textarea id="description" name="Description" class="slds-textarea" 
+                                  value={caseRecord.Description} onchange={handleInputChange} required></textarea>
+                    </div>
+                </div>
+                
+                <template if:true={error}>
+                    <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                        <span class="slds-assistive-text">error</span>
+                        <h2>{error}</h2>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-card__footer">
+            <button class="slds-button slds-button_neutral" onclick={resetForm}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={submitCase} disabled={loading}>
+                <template if:true={loading}>
+                    <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+                </template>
+                Submit Case
+            </button>
+        </div>
+    </div>
+</template>
