@@ -1,0 +1,73 @@
+<template>
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <h2 class="slds-text-heading_medium slds-card__header-title">My Support Cases</h2>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{error}</h2>
+                </div>
+            </template>
+            <template if:true={cases}>
+                <div class="slds-table_container">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Case Number">Case Number</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Subject">Subject</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Priority">Priority</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Created Date">Created Date</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Product">Product</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate" title="Type">Type</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={cases} for:item="case">
+                                <tr key={case.Id} class="slds-hint-parent" onclick={handleCaseClick} data-case-id={case.Id}>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.CaseNumber}</div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.Subject}</div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.Status}</div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.Priority}</div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.CreatedDate}</div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.Product__c}</div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-truncate">{case.Type}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

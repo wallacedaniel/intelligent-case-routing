@@ -1,0 +1,121 @@
+<template>
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <h2 class="slds-text-heading_medium slds-card__header-title">Case Details</h2>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{error}</h2>
+                </div>
+            </template>
+            <template if:true={case}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Case Number</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.CaseNumber}</div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Subject</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.Subject}</div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Status</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.Status}</div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Priority</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.Priority}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Created Date</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.CreatedDate}</div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Product</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.Product__c}</div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Type</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{case.Type}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-card">
+                    <div class="slds-card__header slds-grid">
+                        <h2 class="slds-text-heading_medium slds-card__header-title">Case Description</h2>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <p>{case.Description}</p>
+                    </div>
+                </div>
+
+                <div class="slds-card">
+                    <div class="slds-card__header slds-grid">
+                        <h2 class="slds-text-heading_medium slds-card__header-title">Comments</h2>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <template if:true={case.CaseComments}>
+                            <template for:each={case.CaseComments} for:item="comment">
+                                <div key={comment.Id} class="slds-m-vertical_medium">
+                                    <div class="slds-media">
+                                        <div class="slds-media__figure">
+                                            <lightning-avatar label={comment.CreatedBy.Name} size="x-small"></lightning-avatar>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <h3 class="slds-text-heading_small">{comment.CreatedBy.Name}</h3>
+                                            <p>{comment.CreatedDate}</p>
+                                            <p>{comment.Body}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="slds-card">
+                    <div class="slds-card__header slds-grid">
+                        <h2 class="slds-text-heading_medium slds-card__header-title">Add Comment</h2>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <textarea class="slds-textarea" value={newComment} 
+                                          onchange={handleCommentChange} 
+                                          placeholder="Enter your comment here..."></textarea>
+                            </div>
+                        </div>
+                        <div class="slds-m-vertical_medium">
+                            <button class="slds-button slds-button_brand" onclick={addComment} disabled={loading}>
+                                <template if:true={loading}>
+                                    <lightning-spinner alternative-text="Adding comment" size="small" variant="brand"></lightning-spinner>
+                                </template>
+                                Add Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>
